@@ -170,7 +170,7 @@ open class Highlighter {
      - Returns: Whether the theme was successfully applied (`true`) or not (`false`)
     */
     @discardableResult
-    open func setTheme(_ themeName: String, withFont: String? = nil, ofSize: CGFloat? = nil) -> Bool {
+    open func setTheme(_ themeName: String, withFont: String? = nil, ofSize: CGFloat? = nil, dynamicColor: DynamicColorLookup? = nil) -> Bool {
         
         // Make sure we can load the theme's CSS file -- or fail
         guard let themePath = self.bundle.path(forResource: themeName, ofType: "css") else {
@@ -191,7 +191,7 @@ open class Highlighter {
         
         // Get the theme CSS and instantiate a Theme object
         let themeString = try! String.init(contentsOfFile: themePath)
-        self.theme = Theme.init(withTheme: themeString, usingFont: font)
+        self.theme = Theme.init(withTheme: themeString, usingFont: font, dynamicColor: dynamicColor)
         return true
     }
 

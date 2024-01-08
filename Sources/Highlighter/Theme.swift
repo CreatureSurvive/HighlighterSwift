@@ -21,7 +21,9 @@ import Foundation
 private typealias HRThemeDict       = [String: [AnyHashable: AnyObject]]
 private typealias HRThemeStringDict = [String: [String: String]]
 
-
+public protocol DynamicColorLookup {
+    func getColor(cssColor: String) -> HRColor?
+}
 /**
  Class representing HighlightSwift's interal storage of a processed Highlight.js theme.
  */
@@ -42,6 +44,8 @@ open class Theme {
     // MARK:- Private Properties
     private var themeDict : HRThemeDict!
     private var strippedTheme : HRThemeStringDict!
+    
+    internal let dynamicColor: DynamicColorLookup?
 
 
     // MARK:- Constructor
@@ -53,10 +57,12 @@ open class Theme {
         - withTheme: The name of the Highlight.js theme to use. Default: `Default`.
         - usingFont: Optionally, a UIFont or NSFont to apply to the theme. Default: Courier @ 14pt.
     */
-    init(withTheme: String = "default", usingFont: HRFont? = nil) {
+    public init(withTheme: String = "default", usingFont: HRFont? = nil, dynamicColor: DynamicColorLookup? = nil) {
         
         // Record the theme name
         self.theme = withTheme
+        
+        self.dynamicColor = dynamicColor
         
         // Apply the font choice
         if let font: HRFont = usingFont {
@@ -386,7 +392,12 @@ open class Theme {
     internal func colourFromHexString(_ colourValue: String) -> HRColor {
         
         var colourString: String = colourValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-
+        
+        if let color = dynamicColor?.getColor(cssColor: colourString) {
+            return color
+        }
+        
+        
         if (colourString.hasPrefix("#")) {
             // The colour is defined by a hex value
             colourString = (colourString as NSString).substring(from: 1)

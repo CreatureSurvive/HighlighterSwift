@@ -56,7 +56,7 @@ open class Highlighter {
      Returns `nil` on failure to load or evaluate `highlight.min.js`,
      or to load the default theme (`Default`)
     */
-    public init?() {
+    public init?(theme: String = "default", dynamicColor: DynamicColorLookup? = nil) {
         
         // Get the library's bundle based on how it's
         // being included in the host app
@@ -85,7 +85,7 @@ open class Highlighter {
         
         // Check and set applying a theme or fail
         // NOTE 'setTheme()' depends on 'self.bundle'
-        guard setTheme("default") else {
+        guard setTheme(theme, dynamicColor: dynamicColor) else {
             return nil
         }
     }

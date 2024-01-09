@@ -270,7 +270,7 @@ open class Highlighter {
                 scanner.scanLocation += (self.spanStart as NSString).length
                 scanner.scanUpTo(self.spanStartClose, into:&scannedString)
                 scanner.scanLocation += (self.spanStartClose as NSString).length
-                propStack.append(scannedString! as String)
+                propStack.append(scannedString!.replacingOccurrences(of: " ", with: "") as String)
             } else if nextChar == "/" {
                 scanner.scanLocation += (self.spanEnd as NSString).length
                 propStack.removeLast()

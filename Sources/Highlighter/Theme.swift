@@ -240,7 +240,7 @@ open class Theme {
 
         var returnDict = [String: [String: String]]()
         for (keys, result) in resultDict {
-            let keyArray = keys.replacingOccurrences(of: " ", with: ",").components(separatedBy: ",")
+            let keyArray = keys.replacingOccurrences(of: " ", with: "").components(separatedBy: ",")
             for key in keyArray {
                 var props : [String: String]?
                 props = returnDict[key]

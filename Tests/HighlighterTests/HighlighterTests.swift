@@ -34,7 +34,7 @@ final class HighlighterTests: XCTestCase {
     func testSetThemeDefaultFont() {
         
         let _ = self.hr!.setTheme("agate")
-        let font: NSFont = self.hr!.theme.codeFont
+        let font: HRFont = self.hr!.theme.codeFont
         XCTAssert(font.fontName == "Courier" && font.pointSize == 14.0)
     }
     
@@ -62,7 +62,7 @@ final class HighlighterTests: XCTestCase {
         // Test colour decoding -- all should be processed as valid colours
         
         // Six-digit RGB
-        var result: NSColor = self.hr!.theme.colourFromHexString("#808000")
+        var result: HRColor = self.hr!.theme.colourFromHexString("#808000")
         XCTAssert(result.redComponent > 0.49 &&
                     result.redComponent < 0.56 &&
                     result.greenComponent > 0.49 &&
@@ -101,7 +101,7 @@ final class HighlighterTests: XCTestCase {
         
         // Unknown CSS entity
         var result = self.hr!.theme.colourFromHexString("olive")
-        XCTAssert(result == NSColor.gray)
+        XCTAssert(result == HRColor.gray)
         
         // Bad hex value 1
         result = self.hr!.theme.colourFromHexString("#ZZZ")
@@ -112,7 +112,28 @@ final class HighlighterTests: XCTestCase {
         
         // Bad hex value 2
         result = self.hr!.theme.colourFromHexString("#aaaaa")
-        XCTAssert(result == NSColor.gray)
+        XCTAssert(result == HRColor.gray)
     }
     
+extension UIColor {
+    var redComponent: CGFloat {
+        var red: CGFloat = 0
+        getRed(&red, green: nil, blue: nil, alpha: nil)
+        return red
+    }
+    var greenComponent: CGFloat {
+        var green: CGFloat = 0
+        getRed(nil, green: &green, blue: nil, alpha: nil)
+        return green
+    }
+    var blueComponent: CGFloat {
+        var blue: CGFloat = 0
+        getRed(nil, green: nil, blue: &blue, alpha: nil)
+        return blue
+    }
+    var alphaComponent: CGFloat {
+        var alpha: CGFloat = 0
+        getRed(nil, green: nil, blue: nil, alpha: &alpha)
+        return alpha
+    }
 }

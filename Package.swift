@@ -68,6 +68,7 @@ let package = Package(
                 .copy("Assets/styles/foundation.css"),
                 .copy("Assets/styles/github-gist.css"),
                 .copy("Assets/styles/github.css"),
+                .copy("Assets/styles/github-dark.css"),
                 .copy("Assets/styles/gml.css"),
                 .copy("Assets/styles/googlecode.css"),
                 .copy("Assets/styles/gradient-light.css"),

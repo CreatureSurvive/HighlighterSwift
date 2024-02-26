@@ -24,8 +24,8 @@ let package = Package(
             path: "Sources",
             exclude: ["Assets/LICENCE"],
             resources: [
-                .copy("Assets/styles/xcode-default-light.css")
-            ]),
+                .copy("Assets/highlight.min.js"),
+                .copy("Assets/styles/xcode-default-light.css")            ]),
         .testTarget(
             name: "HighlighterTests",
             dependencies: ["Highlighter"])
